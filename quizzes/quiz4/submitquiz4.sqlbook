@@ -165,7 +165,7 @@ number of rows by "driverId" ```GROUP BY``` <br>
 -- SQLBook: Code
 -- Active: 1698601033028@@127.0.0.1@5432@formula1
 -- Write your own code
-SELECT "driverId", COUNT(*) AS row_count
+SELECT "driverId", COUNT(*)
 FROM pit_stops
 GROUP BY "driverId"
 HAVING COUNT(*) > 200;

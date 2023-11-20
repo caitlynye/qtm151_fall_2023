@@ -24,20 +24,22 @@ United States Congress dataset
 
 <img src="figures/rdb_us_congress.png" alt="drawing" width="650"/>
 -- SQLBook: Markup
-first table units of observation is members of congress, second table is actions, third table is the bills. 
--- SQLBook: Markup
 # <span style="color:darkblue"> II. Create and Activate a New Database </span>
 -- SQLBook: Code
--- Active: 1698601033028@@127.0.0.1@5432@postgres
+-- Active: 1698674191041@@127.0.0.1@5432@postgres
 
 DROP DATABASE IF EXISTS us_congress;
 -- SQLBook: Code
-CREATE DATABASE us_congress;
--- SQLBook: Code
--- Active: 1698601033028@@127.0.0.1@5432@us_congress
+-- Active: 1698674191041@@127.0.0.1@5432@us_congress
 CREATE SCHEMA bills;
 
 CREATE SCHEMA members;
+-- SQLBook: Code
+-- Active: 1698674191041@@127.0.0.1@5432@formula1
+DROP TABLE IF EXISTS results;
+-- SQLBook: Code
+-- Active: 1698674191041@@127.0.0.1@5432@postgres
+DROP TABLE IF EXISTS races;
 -- SQLBook: Markup
 <font size = "5">
 
@@ -45,13 +47,10 @@ CREATE SCHEMA members;
 
 - Click on the ```Active Connection``` button and choose the correct database
 -- SQLBook: Code
--- Active: 1698601033028@@127.0.0.1@5432@us_congress
+-- Active: 1698674191041@@127.0.0.1@5432@us_congress
 DROP TABLE IF EXISTS bills.bills_actions;
 DROP TABLE IF EXISTS bills.bills_subjects;
 DROP TABLE IF EXISTS members.us_congress_members;
--- SQLBook: Code
--- Active: 1698601033028@@127.0.0.1@5432@formula1
-DROP TABLE IF EXISTS races
 -- SQLBook: Markup
 # <span style="color:darkblue"> III. Import CSV into SQL </span>
 
@@ -97,7 +96,7 @@ DROP TABLE IF EXISTS races
 
      2.2. You have to use a new program
 -- SQLBook: Markup
-### <span style="color:darkblue"> Our solution: use **Pandas** </span>
+### <span style="color:darkblue"> Our solutuon: use **Pandas** </span>
 
 <font size = "5">
 
@@ -146,7 +145,6 @@ Use the following code to view the datasets: us_congress_members, bills_subjects
 SELECT * FROM schemas_name.tables_name
 ```
 -- SQLBook: Code
--- Active: 1698601033028@@127.0.0.1@5432@us_congress
 -- Write your own code
 SELECT * FROM members.us_congress_members;
 -- SQLBook: Markup
@@ -179,6 +177,7 @@ GROUP BY party_name
 
 Count members of group
 -- SQLBook: Code
+-- Active: 1698674191041@@127.0.0.1@5432@us_congress
 SELECT party_name,       
        COUNT(*) AS num_members       
 FROM members.us_congress_members
@@ -222,8 +221,13 @@ AND schema1.table1.key1_3 = schema2.table2.key2_3;
 
 - **Hint:** the rows in the two tables are uniquely identified by the columns: ```congress```, ```bill_number```, ```bill_type```
 -- SQLBook: Code
+-- Active: 1698674191041@@127.0.0.1@5432@us_congress
 -- Write your own code
-
+SELECT * FROM bills.bills_actions
+LEFT JOIN bills.bills_subjects
+ON bills.bills_actions.congress = bills.bills_subjects.congress
+AND bills.bills_actions.bill_number = bills.bills_subjects.bill_number
+AND bills.bills_actions.bill_type = bills.bills_subjects.bill_type;
 -- SQLBook: Markup
 # <span style="color:darkblue"> IV. (Optional) Additional Resources </span>
 
